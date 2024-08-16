@@ -9,7 +9,7 @@ import cloudconvert
 async def start(update:Update, context:ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Send me a file. Make sure it ends with '.docx' .",
+        text="Send me a docx file. Make sure it ends with '.docx' .",
     )
 
 
@@ -105,10 +105,10 @@ async def converter_command(update:Update, context:ContextTypes.DEFAULT_TYPE):
         shutil.rmtree(user_dir)
     cloudconvert.Job.delete(id=job['id'])
 
-async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_document(
+async def helper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        document=f"The file you uploaded is not docx. Try again")
+        text=f"The uploaded file has wrong format. It must end with '.docx'. Try again")
 
 def main():
     app = Application.builder().token(TOKEN).build()
@@ -116,7 +116,7 @@ def main():
     app.add_handlers([
         CommandHandler('start', start),
         MessageHandler(filters.Document.DOCX, converter_command),
-        MessageHandler(filters.Document.ALL & ~(filters.Document.DOCX) , help),
+        MessageHandler(filters.Document.ALL & (~filters.Document.DOCX) , helper),
     ])
 
     app.run_polling()
