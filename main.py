@@ -105,12 +105,18 @@ async def converter_command(update:Update, context:ContextTypes.DEFAULT_TYPE):
         shutil.rmtree(user_dir)
     cloudconvert.Job.delete(id=job['id'])
 
+async def help(update: Update, context: ContextTypes.ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_document(
+        chat_id=update.effective_chat.id,
+        document=f"The file you uploaded is not docx. Try again")
+
 def main():
     app = Application.builder().token(TOKEN).build()
 
     app.add_handlers([
         CommandHandler('start', start),
-        MessageHandler(filters.Document.DOCX, converter_command)
+        MessageHandler(filters.Document.DOCX, converter_command),
+        MessageHandler(filters.Document.ALL & ~(filters.Document.DOCX) , help),
     ])
 
     app.run_polling()
