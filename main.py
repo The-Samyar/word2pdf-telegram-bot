@@ -105,7 +105,7 @@ async def converter_command(update:Update, context:ContextTypes.DEFAULT_TYPE):
         shutil.rmtree(user_dir)
     cloudconvert.Job.delete(id=job['id'])
 
-async def help(update: Update, context: ContextTypes.ContextTypes.DEFAULT_TYPE):
+async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_document(
         chat_id=update.effective_chat.id,
         document=f"The file you uploaded is not docx. Try again")
