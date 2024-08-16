@@ -2,6 +2,7 @@ anyio==4.4.0
 appscript==1.2.5
 certifi==2024.7.4
 charset-normalizer==3.3.2
+cloudconvert==2.1.0
 docx2pdf==0.1.8
 h11==0.14.0
 httpcore==1.0.5
